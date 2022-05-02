@@ -1,0 +1,15 @@
+import models of elements (pacman, mobs, points etc)
+deplacement of pacman
+make the AI for the mobs
+implement the classic pacman map
+make a pause menu (continue, restart)
+display score
+implement 3 lives
+add sound to the game
+
+api in golang to store scoreboard (store score in mongodb ? or json)
+display the scoreboard
+add new maps(make a map generator)
+
+story mode (with m)
+easter egg m
