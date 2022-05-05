@@ -3,28 +3,30 @@ import {GLTFLoader} from './node_modules/three/examples/jsm/loaders/GLTFLoader.j
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const loader = new GLTFLoader();
+const mixer = new THREE.AnimationMixer();
 
-loader.load( './pacman-models/PacMan.glb', function ( glb )
-{
-    var pacman = glb.scene;  // pacman 3D object is loaded
-    pacman.scale.set(2, 2, 2);
-    pacman.position.y = 4;
-    scene.add(pacman);
-} );
+ const loader = new GLTFLoader()
+loader.load('./pacman-models/pacman.glb', function(glb){
+    const mixer = new THREE.AnimationMixer(glb.scene);
+    console.log(glb)
+    const animation = mixer.clipAction(glb.animations[0]);
+    animation.enable = true;
+    animation.play();
 
-// const geometry = new THREE.BoxGeometry();
-// const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-// const cube = new THREE.Mesh( geometry, material );
-// scene.add( cube );
+    scene.add(glb.scene)
+})
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-camera.position.z = 10;
+camera.position.z = 25;
+
+const clock = new THREE.Clock();
 
 function animate() {
+    var delta = clock.getDelta();
+    if ( mixer ) mixer.update( delta );
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 }   
